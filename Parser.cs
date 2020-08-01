@@ -34,7 +34,7 @@ namespace SeriesManager
             return episodes;
         }
 
-        public async Task<bool> RenameAndMoveEpisodes(List<string> episodes, List<string> epNames, string seriesDirPath)
+        public async Task<bool> RenameAndMoveEpisodes(List<string> episodes, List<string> epNames, ProgressBar progressBar)
         {
             var newNames = GetNewNamesForEpisodes(episodes, epNames);
             if (newNames is null) { return false; }
@@ -43,12 +43,14 @@ namespace SeriesManager
             {
                 new System.IO.FileInfo($"{episode.Value}").Directory?.Create();
                 await Task.Run(() => File.Move(episode.Key, episode.Value));
+                
+                progressBar.PerformStep();
             }
 
             return true;
         }
 
-        private Dictionary<string, string> GetNewNamesForEpisodes(string[] episodes, List<string> epNames)
+        private Dictionary<string, string> GetNewNamesForEpisodes(List<string> episodes, List<string> epNames)
         {
             var result = new Dictionary<string, string>();
             // EP FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"

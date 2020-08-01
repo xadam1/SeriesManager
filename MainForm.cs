@@ -81,7 +81,7 @@ namespace SeriesManager
             // FILE FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
             filesInDir = Directory.GetFiles(SeriesDirectoryPath).ToList();
 
-            this.lblEpCounter.Text = $"Episodes Found:\t\t{filesInDir.Count}";
+            this.lblEpCounter.Text = $"Episodes Found:  {filesInDir.Count}";
             this.lblEpCounter.Visible = true;
         }
 
@@ -98,7 +98,7 @@ namespace SeriesManager
             // EPISODE FORMAT: "S02E01-The_North_Remembers"
             episodeNamesFromFile = parser.ExtractEpNamesFromFile(EpisodeNameListPath);
 
-            this.lblEpNamesCounter.Text = $"Names of Episodes Found:\t\t{episodeNamesFromFile.Count}";
+            this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {episodeNamesFromFile.Count}";
             this.lblEpNamesCounter.Visible = true;
         }
 
@@ -120,7 +120,7 @@ namespace SeriesManager
             }
 
             ProgressBarSetup(filesInDir.Count);
-            await parser.RenameAndMoveEpisodes(filesInDir, episodeNamesFromFile, SeriesDirectoryPath);
+            await parser.RenameAndMoveEpisodes(filesInDir, episodeNamesFromFile, progressBar);
 
         }
 
