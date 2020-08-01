@@ -35,6 +35,9 @@
             this.lblEpNameListFile = new System.Windows.Forms.Label();
             this.btnSelectEpNameListFile = new System.Windows.Forms.Button();
             this.btnProcess = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.lblEpCounter = new System.Windows.Forms.Label();
+            this.lblEpNamesCounter = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSelectSeriesDir
@@ -114,7 +117,7 @@
             this.btnProcess.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcess.Font = new System.Drawing.Font("Montserrat", 14.25F);
             this.btnProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnProcess.Location = new System.Drawing.Point(343, 406);
+            this.btnProcess.Location = new System.Drawing.Point(343, 124);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(100, 41);
             this.btnProcess.TabIndex = 28;
@@ -122,12 +125,47 @@
             this.btnProcess.UseVisualStyleBackColor = true;
             this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(173, 310);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(487, 23);
+            this.progressBar.TabIndex = 29;
+            this.progressBar.Visible = false;
+            // 
+            // lblEpCounter
+            // 
+            this.lblEpCounter.AutoSize = true;
+            this.lblEpCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEpCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.lblEpCounter.Location = new System.Drawing.Point(12, 210);
+            this.lblEpCounter.Name = "lblEpCounter";
+            this.lblEpCounter.Size = new System.Drawing.Size(145, 19);
+            this.lblEpCounter.TabIndex = 30;
+            this.lblEpCounter.Text = "Episodes Found: ";
+            this.lblEpCounter.Visible = false;
+            // 
+            // lblEpNamesCounter
+            // 
+            this.lblEpNamesCounter.AutoSize = true;
+            this.lblEpNamesCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEpNamesCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.lblEpNamesCounter.Location = new System.Drawing.Point(12, 254);
+            this.lblEpNamesCounter.Name = "lblEpNamesCounter";
+            this.lblEpNamesCounter.Size = new System.Drawing.Size(225, 19);
+            this.lblEpNamesCounter.TabIndex = 31;
+            this.lblEpNamesCounter.Text = "Names of Episodes Found: ";
+            this.lblEpNamesCounter.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.lblEpNamesCounter);
+            this.Controls.Add(this.lblEpCounter);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.textEpNameListFilePath);
             this.Controls.Add(this.lblEpNameListFile);
@@ -151,6 +189,9 @@
         private System.Windows.Forms.Label lblEpNameListFile;
         private System.Windows.Forms.Button btnSelectEpNameListFile;
         private System.Windows.Forms.Button btnProcess;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label lblEpCounter;
+        private System.Windows.Forms.Label lblEpNamesCounter;
     }
 }
 

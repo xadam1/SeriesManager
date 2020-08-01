@@ -18,6 +18,9 @@ namespace SeriesManager
 
         private Parser parser = new Parser();
 
+        private List<string> filesInDir = new List<string>();
+        private List<string> episodeNamesFromFile = new List<string>();
+
 
         public MainForm()
         {
@@ -74,6 +77,12 @@ namespace SeriesManager
 
             this.textSeriesDirPath.Text = dirPath;
             SeriesDirectoryPath = dirPath;
+
+            // FILE FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
+            filesInDir = Directory.GetFiles(SeriesDirectoryPath).ToList();
+
+            this.lblEpCounter.Text = $"Episodes Found:\t\t{filesInDir.Count}";
+            this.lblEpCounter.Visible = true;
         }
 
         private void btnSelectEpNameListFile_Click(object sender, EventArgs e)
@@ -84,9 +93,16 @@ namespace SeriesManager
 
             this.textEpNameListFilePath.Text = filePath;
             EpisodeNameListPath = filePath;
+
+
+            // EPISODE FORMAT: "S02E01-The_North_Remembers"
+            episodeNamesFromFile = parser.ExtractEpNamesFromFile(EpisodeNameListPath);
+
+            this.lblEpNamesCounter.Text = $"Names of Episodes Found:\t\t{episodeNamesFromFile.Count}";
+            this.lblEpNamesCounter.Visible = true;
         }
 
-        private void btnProcess_Click(object sender, EventArgs e)
+        private async void btnProcess_Click(object sender, EventArgs e)
         {
             if (SeriesDirectoryPath is null)
             {
@@ -103,19 +119,23 @@ namespace SeriesManager
                 if (res == DialogResult.Cancel) { return; }
             }
 
-            var files = Directory.GetFiles(SeriesDirectoryPath);
-            foreach (var file in files)
-            {
-                Console.WriteLine(file);
-            }
-
-            var episodesNames = parser.ExtractEpNamesFromFile(EpisodeNameListPath);
-            foreach (var episodeName in episodesNames)
-            {
-                Console.WriteLine(episodeName);
-            }
+            ProgressBarSetup(filesInDir.Count);
+            await parser.RenameAndMoveEpisodes(filesInDir, episodeNamesFromFile, SeriesDirectoryPath);
 
         }
 
+        private void ProgressBarSetup(int numberOfFiles)
+        {
+            // Display the ProgressBar control.
+            this.progressBar.Visible = true;
+            // Set Minimum to 1 to represent the first file being copied.
+            this.progressBar.Minimum = 1;
+            // Set Maximum to the total number of files to copy.
+            this.progressBar.Maximum = numberOfFiles;
+            // Set the initial value of the ProgressBar.
+            this.progressBar.Value = 1;
+            // Set the Step property to a value of 1 to represent each file being copied.
+            this.progressBar.Step = 1;
+        }
     }
 }
