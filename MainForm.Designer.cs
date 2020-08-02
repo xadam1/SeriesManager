@@ -67,8 +67,10 @@
             this.textSeriesDirPath.Location = new System.Drawing.Point(173, 39);
             this.textSeriesDirPath.MaxLength = 50;
             this.textSeriesDirPath.Name = "textSeriesDirPath";
+            this.textSeriesDirPath.ReadOnly = true;
             this.textSeriesDirPath.Size = new System.Drawing.Size(487, 21);
             this.textSeriesDirPath.TabIndex = 24;
+            this.textSeriesDirPath.TextChanged += new System.EventHandler(this.textSeriesDirPath_TextChanged);
             // 
             // lblSeriesFolder
             // 
@@ -90,8 +92,10 @@
             this.textEpNameListFilePath.Location = new System.Drawing.Point(173, 76);
             this.textEpNameListFilePath.MaxLength = 50;
             this.textEpNameListFilePath.Name = "textEpNameListFilePath";
+            this.textEpNameListFilePath.ReadOnly = true;
             this.textEpNameListFilePath.Size = new System.Drawing.Size(487, 21);
             this.textEpNameListFilePath.TabIndex = 27;
+            this.textEpNameListFilePath.TextChanged += new System.EventHandler(this.textEpNameListFilePath_TextChanged);
             // 
             // lblEpNameListFile
             // 
@@ -193,8 +197,10 @@
             this.textSubZipFile.Location = new System.Drawing.Point(173, 117);
             this.textSubZipFile.MaxLength = 50;
             this.textSubZipFile.Name = "textSubZipFile";
+            this.textSubZipFile.ReadOnly = true;
             this.textSubZipFile.Size = new System.Drawing.Size(487, 21);
             this.textSubZipFile.TabIndex = 37;
+            this.textSubZipFile.TextChanged += new System.EventHandler(this.textSubZipFile_TextChanged);
             // 
             // lblSubZipFile
             // 

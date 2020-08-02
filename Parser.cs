@@ -70,7 +70,7 @@ namespace SeriesManager
                     targetDir = $"{seriesFolder}\\{newName}";
 
                     var newPath = $"{subtitlesFolder}\\{newName}{extension}";
-                    File.Move(subtitleFile,$"{targetDir}\\{newName}{extension}");
+                    File.Move(subtitleFile, $"{targetDir}\\{newName}{extension}");
                     continue;
                 }
 
@@ -95,7 +95,7 @@ namespace SeriesManager
 
                 var match = Regex.Match(name, regex.ToString()).Groups;
                 var (seNum, epNum) = PadNamesIfNeeded(match);
-                
+
                 // Get new name for file
                 var newName = _nameList.Count == 0 ? $"S{seNum}E{epNum}" : _nameList.Single(l => l.StartsWith($"S{seNum}E{epNum}")).ToString();
                 var newLocation = $"{subtitleDir}\\{newName}{extension}";
@@ -145,6 +145,8 @@ namespace SeriesManager
 
         private static Dictionary<string, string> GetNewNamesForEpisodes(List<string> episodes, List<string> epNames)
         {
+            bool warnWehnEpNotFound = true;
+
             var result = new Dictionary<string, string>();
             // EP FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
 
@@ -166,11 +168,17 @@ namespace SeriesManager
                 string newName = lbl;
                 if (match is null)
                 {
-                    var res = MessageBox.Show(
-                        $"Episode Name NOT Found!\n\nTrying to find {lbl} in Episode Name List...\n\nIf you press 'OK' default name will be used.",
-                        "EP NAME NOT FOUND", MessageBoxButtons.OKCancel);
+                    if (warnWehnEpNotFound)
+                    {
+                        var res = MessageBox.Show(
+                            $"Episode Name NOT Found!\n\nTrying to find {lbl} in Episode Name List...\n\nIf you press 'YES' default name will be used.\n\n" +
+                            "!!! PRESS 'NO' IF YOU DON'T WANT TO SEE THIS AGAIN !!!",
+                            "EP NAME NOT FOUND", MessageBoxButtons.YesNoCancel);
 
-                    if (res == DialogResult.Cancel) { return null; }
+                        if (res == DialogResult.Cancel) { return null; }
+
+                        if (res == DialogResult.No) { warnWehnEpNotFound = false; }
+                    }
                 }
                 else
                 {

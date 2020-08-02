@@ -23,6 +23,7 @@ namespace SeriesManager
 
         private List<string> _episodesInEpisodeSeriesDir = new List<string>();
 
+        private bool _subtitlesIncluded = true;
 
         public MainForm()
         {
@@ -104,6 +105,16 @@ namespace SeriesManager
                 return;
             }
 
+            if (_seriesDirectoryPath is null || _seriesDirectoryPath == string.Empty)
+            {
+                var res = MessageBox.Show("You did not select Subtitles.\nEpisodes will NOT INCLUDE SUBS if you click 'OK'.", "Subtitles Missing!",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Cancel) { return; }
+
+                _subtitlesIncluded = false;
+            }
+
             ProgressBarSetup(_episodesInEpisodeSeriesDir.Count);
 
             await ManageSeries();
@@ -127,15 +138,21 @@ namespace SeriesManager
         {
             // Extract ep names from given file
             Parser.ExtractEpNamesFromFile(_episodeNameListPath);
-            
-            // Extract and "rename" Subs into useable form
-            InitializeSubtitles();
-            
+
+            if (_subtitlesIncluded)
+            {
+                // Extract and "rename" Subs into useable form
+                InitializeSubtitles();
+            }
+
             // Move each ep into its subfolder and rename it by the names extracted from file
             await Parser.MoveEpsIntoSubfolders(_episodesInEpisodeSeriesDir, progressBar);
 
-            // Now move subs into the folders as well and rename them correctly
-            Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
+            if (_subtitlesIncluded)
+            {
+                // Now move subs into the folders as well and rename them correctly
+                Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
+            }
 
             // Just fancy stuff
             this.lblProgress.Text = "Finished.";
@@ -253,6 +270,22 @@ namespace SeriesManager
             {
                 Console.WriteLine(exception);
             }
+        }
+
+
+        private void textSeriesDirPath_TextChanged(object sender, EventArgs e)
+        {
+            btnSelectSeriesDir_Click(sender, e);
+        }
+
+        private void textEpNameListFilePath_TextChanged(object sender, EventArgs e)
+        {
+            btnSelectEpNameListFile_Click(sender, e);
+        }
+
+        private void textSubZipFile_TextChanged(object sender, EventArgs e)
+        {
+            btnSelectSubZipFile_Click(sender, e);
         }
     }
 }
