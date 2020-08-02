@@ -114,7 +114,7 @@ namespace SeriesManager
             Parser.ExtractEpNamesFromFile(_episodeNameListPath);
 
             // Move each ep into its subfolder and rename it by the names extracted from file
-            await Parser.RenameAndMoveEpisodes(_episodesInEpisodeSeriesDir, progressBar);
+            await Parser.MoveEpsIntoSubfolders(_episodesInEpisodeSeriesDir, progressBar);
 
             // Now move subs into the folders as well and rename them correctly
             Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
