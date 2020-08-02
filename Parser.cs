@@ -49,9 +49,9 @@ namespace SeriesManager
         /// <param name="epNames"></param>
         /// <param name="progressBar"></param>
         /// <returns></returns>
-        public static async Task<bool> RenameAndMoveEpisodes(List<string> episodes, List<string> epNames, ProgressBar progressBar)
+        public static async Task<bool> RenameAndMoveEpisodes(List<string> episodes, ProgressBar progressBar)
         {
-            var newNames = GetNewNamesForEpisodes(episodes, epNames);
+            var newNames = GetNewNamesForEpisodes(episodes, _namelist);
             if (newNames is null) { return false; }
 
             foreach (var episode in newNames)
@@ -64,6 +64,20 @@ namespace SeriesManager
 
             return true;
         }
+
+        public static void MoveSubsIntoEpFolder(string seriesFolder,string subtitlesFolder)
+        {
+            var subtitles = Directory.GetFiles(subtitlesFolder).ToList();
+
+            foreach (var subtitleFile in subtitles)
+            {
+                FileInfo sbFile = new FileInfo(subtitleFile);
+
+                var targetDir = $"{seriesFolder}\\{sbFile.Name}";
+                File.Move(sbFile.FullName,$"{targetDir}\\{sbFile.Name}{sbFile.Extension}");
+            }
+        }
+
 
         public static bool RenameSubtitleFiles(string subtitleDir)
         {
@@ -84,7 +98,7 @@ namespace SeriesManager
                 var (seNum, epNum) = PadNamesIfNeeded(match);
 
                 // Get new name for file
-                var newName = _namelist.Count == 0 ? $"S{seNum}E{epNum}" : _namelist.Where(name => name.StartsWith($"S{seNum}E{epNum}")).ToString();
+                var newName = _namelist.Count == 0 ? $"S{seNum}E{epNum}" : _namelist.Single(name => name.StartsWith($"S{seNum}E{epNum}")).ToString();
                 var newLocation = $"{subtitleDir}\\{newName}{extension}";
                 File.Move(subtitle.FullName,newLocation);
             }
@@ -138,13 +152,12 @@ namespace SeriesManager
             {
                 FileInfo epInfo = new FileInfo(episode);
 
-                var name = epInfo.Name;     // Game.Of.Thrones.S03E10[1080p].mkv
-
-                var epExtension = epInfo.Extension;     // .mkv
+                var name = Path.GetFileNameWithoutExtension(episode);     // Game.Of.Thrones.S03E10[1080p]
+                var epExtension = Path.GetExtension(episode);             // .mkv
 
 
                 // TODO REGEX TRY FROM SUBTITLES IN PARSER Parser.TryMatchRegex
-                var lbl = Regex.Match(name, @".*[Ss](?<se>\d+)[Ee](?<ep>\d+).*").Groups[1].Value;   // S03E10
+                var lbl = Regex.Match(name, @".*([Ss]\d+[Ee]\d+).*").Groups[1].Value;   // S03E10
 
                 var regex = new Regex($"{lbl}-");
                 var matches = epNames.Where(l => regex.IsMatch(l)).ToList();
@@ -164,6 +177,7 @@ namespace SeriesManager
                     newName = matches[0];
                 }
 
+                // TODO REMOVE EPINFO
                 newName = $"{epInfo.Directory.FullName}\\{newName}\\{newName}{epExtension}";
                 result.Add(episode, newName);
             }

@@ -37,7 +37,6 @@
             this.btnProcess = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblEpCounter = new System.Windows.Forms.Label();
-            this.lblEpNamesCounter = new System.Windows.Forms.Label();
             this.lblProgress = new System.Windows.Forms.Label();
             this.checkBoxOpenFolderWhenDone = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -151,18 +150,6 @@
             this.lblEpCounter.Text = "Episodes Found: ";
             this.lblEpCounter.Visible = false;
             // 
-            // lblEpNamesCounter
-            // 
-            this.lblEpNamesCounter.AutoSize = true;
-            this.lblEpNamesCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEpNamesCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblEpNamesCounter.Location = new System.Drawing.Point(12, 276);
-            this.lblEpNamesCounter.Name = "lblEpNamesCounter";
-            this.lblEpNamesCounter.Size = new System.Drawing.Size(225, 19);
-            this.lblEpNamesCounter.TabIndex = 31;
-            this.lblEpNamesCounter.Text = "Names of Episodes Found: ";
-            this.lblEpNamesCounter.Visible = false;
-            // 
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
@@ -245,7 +232,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBoxOpenFolderWhenDone);
             this.Controls.Add(this.lblProgress);
-            this.Controls.Add(this.lblEpNamesCounter);
             this.Controls.Add(this.lblEpCounter);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnProcess);
@@ -257,6 +243,7 @@
             this.Controls.Add(this.btnSelectSeriesDir);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,7 +260,6 @@
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblEpCounter;
-        private System.Windows.Forms.Label lblEpNamesCounter;
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.CheckBox checkBoxOpenFolderWhenDone;
         private System.Windows.Forms.Label label1;

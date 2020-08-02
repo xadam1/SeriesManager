@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Runtime.CompilerServices;
 
 namespace SeriesManager
 {
@@ -18,10 +19,7 @@ namespace SeriesManager
         private string _episodeNameListPath;
         private string _tmpSubDirPath;
 
-
-
-        private List<string> _filesInDir = new List<string>();
-        private List<string> _episodeNamesFromFile = new List<string>();
+        private List<string> _episodesInEpisodeSeriesDir = new List<string>();
 
 
         public MainForm()
@@ -42,9 +40,9 @@ namespace SeriesManager
             _seriesDirectoryPath = dirPath;
 
             // FILE FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
-            _filesInDir = Directory.GetFiles(_seriesDirectoryPath).ToList();
+            _episodesInEpisodeSeriesDir = Directory.GetFiles(_seriesDirectoryPath).ToList();
 
-            this.lblEpCounter.Text = $"Episodes Found:  {_filesInDir.Count}";
+            this.lblEpCounter.Text = $"Episodes Found:  {_episodesInEpisodeSeriesDir.Count}";
             this.lblEpCounter.Visible = true;
         }
 
@@ -56,15 +54,6 @@ namespace SeriesManager
 
             this.textEpNameListFilePath.Text = filePath;
             _episodeNameListPath = filePath;
-
-
-
-
-            // EPISODE FORMAT: "S02E01-The_North_Remembers"
-            _episodeNamesFromFile = Parser.ExtractEpNamesFromFile(_episodeNameListPath);
-
-            this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {_episodeNamesFromFile.Count}";
-            this.lblEpNamesCounter.Visible = true;
         }
 
         private void btnSelectSubZipFile_Click(object sender, EventArgs e)
@@ -85,9 +74,6 @@ namespace SeriesManager
                 DeleteSubsDir(_tmpSubDirPath);
                 return;
             }
-
-
-
         }
 
 
@@ -108,15 +94,16 @@ namespace SeriesManager
                 if (res == DialogResult.Cancel) { return; }
             }
 
-            ProgressBarSetup(_filesInDir.Count);
+            ProgressBarSetup(_episodesInEpisodeSeriesDir.Count);
 
-            await Parser.RenameAndMoveEpisodes(_filesInDir, _episodeNamesFromFile, progressBar);
+            await Parser.RenameAndMoveEpisodes(_episodesInEpisodeSeriesDir, progressBar);
+
+            Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
 
             this.lblProgress.Text = "Finished.";
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             OpenFolderAfterFinishing();
-
             DeleteSubsDir(_tmpSubDirPath);
         }
 
@@ -212,6 +199,20 @@ namespace SeriesManager
                 File.Delete(file);
             }
             Directory.Delete(subsDirPath);
+        }
+
+
+
+        private void OnClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                DeleteSubsDir(_tmpSubDirPath);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }
