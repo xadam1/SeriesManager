@@ -13,13 +13,13 @@ namespace SeriesManager
 {
     public partial class MainForm : Form
     {
-        private string SeriesDirectoryPath;
-        private string EpisodeNameListPath;
+        private string _seriesDirectoryPath;
+        private string _episodeNameListPath;
 
-        private Parser parser = new Parser();
+        private Parser _parser = new Parser();
 
-        private List<string> filesInDir = new List<string>();
-        private List<string> episodeNamesFromFile = new List<string>();
+        private List<string> _filesInDir = new List<string>();
+        private List<string> _episodeNamesFromFile = new List<string>();
 
 
         public MainForm()
@@ -28,6 +28,64 @@ namespace SeriesManager
 
             this.textSeriesDirPath.Text = "Not Selected";
             this.textEpNameListFilePath.Text = "Not Selected";
+        }
+
+        private void btnSelectSeriesDir_Click(object sender, EventArgs e)
+        {
+            var dirPath = GetSeriesDirectoryPath();
+
+            if (dirPath == string.Empty) { return; }
+
+            this.textSeriesDirPath.Text = dirPath;
+            _seriesDirectoryPath = dirPath;
+
+            // FILE FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
+            _filesInDir = Directory.GetFiles(_seriesDirectoryPath).ToList();
+
+            this.lblEpCounter.Text = $"Episodes Found:  {_filesInDir.Count}";
+            this.lblEpCounter.Visible = true;
+        }
+
+        private void btnSelectEpNameListFile_Click(object sender, EventArgs e)
+        {
+            var filePath = GetEpisodeNamesFilePath();
+
+            if (filePath == string.Empty) { return; }
+
+            this.textEpNameListFilePath.Text = filePath;
+            _episodeNameListPath = filePath;
+
+
+            // EPISODE FORMAT: "S02E01-The_North_Remembers"
+            _episodeNamesFromFile = _parser.ExtractEpNamesFromFile(_episodeNameListPath);
+
+            this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {_episodeNamesFromFile.Count}";
+            this.lblEpNamesCounter.Visible = true;
+        }
+
+        private async void btnProcess_Click(object sender, EventArgs e)
+        {
+            if (_seriesDirectoryPath is null)
+            {
+                MessageBox.Show("First you need to select Series Folder!", "Invalid Series Folder!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (_episodeNameListPath is null)
+            {
+                var res = MessageBox.Show("You did not select Episode Name List.\nEpisodes will not be named if you click 'OK'.", "Name List Missing!",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Cancel) { return; }
+            }
+
+            ProgressBarSetup(_filesInDir.Count);
+
+            await _parser.RenameAndMoveEpisodes(_filesInDir, _episodeNamesFromFile, progressBar);
+
+            this.lblProgress.Text = "Finished.";
+            MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -69,63 +127,10 @@ namespace SeriesManager
             return filePath;
         }
 
-        private void btnSelectSeriesDir_Click(object sender, EventArgs e)
-        {
-            var dirPath = GetSeriesDirectoryPath();
-
-            if (dirPath == string.Empty) { return; }
-
-            this.textSeriesDirPath.Text = dirPath;
-            SeriesDirectoryPath = dirPath;
-
-            // FILE FORMAT: "C:\Users\honza\Downloads\test\Game.Of.Thrones.S03E01[1080p].mkv"
-            filesInDir = Directory.GetFiles(SeriesDirectoryPath).ToList();
-
-            this.lblEpCounter.Text = $"Episodes Found:  {filesInDir.Count}";
-            this.lblEpCounter.Visible = true;
-        }
-
-        private void btnSelectEpNameListFile_Click(object sender, EventArgs e)
-        {
-            var filePath = GetEpisodeNamesFilePath();
-
-            if (filePath == string.Empty) { return; }
-
-            this.textEpNameListFilePath.Text = filePath;
-            EpisodeNameListPath = filePath;
-
-
-            // EPISODE FORMAT: "S02E01-The_North_Remembers"
-            episodeNamesFromFile = parser.ExtractEpNamesFromFile(EpisodeNameListPath);
-
-            this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {episodeNamesFromFile.Count}";
-            this.lblEpNamesCounter.Visible = true;
-        }
-
-        private async void btnProcess_Click(object sender, EventArgs e)
-        {
-            if (SeriesDirectoryPath is null)
-            {
-                MessageBox.Show("First you need to select Series Folder!", "Invalid Series Folder!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (EpisodeNameListPath is null)
-            {
-                var res = MessageBox.Show("You did not select Episode Name List.\nEpisodes will not be named if you click 'OK'.", "Name List Missing!",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-
-                if (res == DialogResult.Cancel) { return; }
-            }
-
-            ProgressBarSetup(filesInDir.Count);
-            await parser.RenameAndMoveEpisodes(filesInDir, episodeNamesFromFile, progressBar);
-
-        }
-
         private void ProgressBarSetup(int numberOfFiles)
         {
+            this.lblProgress.Visible = true;
+
             // Display the ProgressBar control.
             this.progressBar.Visible = true;
             // Set Minimum to 1 to represent the first file being copied.

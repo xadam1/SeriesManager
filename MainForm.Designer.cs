@@ -38,6 +38,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblEpCounter = new System.Windows.Forms.Label();
             this.lblEpNamesCounter = new System.Windows.Forms.Label();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSelectSeriesDir
@@ -117,7 +118,7 @@
             this.btnProcess.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcess.Font = new System.Drawing.Font("Montserrat", 14.25F);
             this.btnProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnProcess.Location = new System.Drawing.Point(343, 124);
+            this.btnProcess.Location = new System.Drawing.Point(353, 120);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(100, 41);
             this.btnProcess.TabIndex = 28;
@@ -127,7 +128,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(173, 310);
+            this.progressBar.Location = new System.Drawing.Point(173, 358);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(487, 23);
             this.progressBar.TabIndex = 29;
@@ -157,12 +158,25 @@
             this.lblEpNamesCounter.Text = "Names of Episodes Found: ";
             this.lblEpNamesCounter.Visible = false;
             // 
+            // lblProgress
+            // 
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.lblProgress.Location = new System.Drawing.Point(366, 324);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(90, 19);
+            this.lblProgress.TabIndex = 32;
+            this.lblProgress.Text = "Progress...";
+            this.lblProgress.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.lblEpNamesCounter);
             this.Controls.Add(this.lblEpCounter);
             this.Controls.Add(this.progressBar);
@@ -192,6 +206,7 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblEpCounter;
         private System.Windows.Forms.Label lblEpNamesCounter;
+        private System.Windows.Forms.Label lblProgress;
     }
 }
 

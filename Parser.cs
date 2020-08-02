@@ -10,6 +10,11 @@ namespace SeriesManager
 {
     public class Parser
     {
+        /// <summary>
+        /// Loads episode names from given file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>List of episode names in correct format</returns>
         public List<string> ExtractEpNamesFromFile(string filePath)
         {
             List<string> episodes = new List<string>();
@@ -34,6 +39,13 @@ namespace SeriesManager
             return episodes;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="episodes"></param>
+        /// <param name="epNames"></param>
+        /// <param name="progressBar"></param>
+        /// <returns></returns>
         public async Task<bool> RenameAndMoveEpisodes(List<string> episodes, List<string> epNames, ProgressBar progressBar)
         {
             var newNames = GetNewNamesForEpisodes(episodes, epNames);
@@ -43,12 +55,13 @@ namespace SeriesManager
             {
                 new System.IO.FileInfo($"{episode.Value}").Directory?.Create();
                 await Task.Run(() => File.Move(episode.Key, episode.Value));
-                
+
                 progressBar.PerformStep();
             }
 
             return true;
         }
+
 
         private Dictionary<string, string> GetNewNamesForEpisodes(List<string> episodes, List<string> epNames)
         {
