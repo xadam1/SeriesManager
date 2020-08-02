@@ -30,6 +30,7 @@ namespace SeriesManager
 
             this.textSeriesDirPath.Text = "Not Selected";
             this.textEpNameListFilePath.Text = "Not Selected";
+            this.textSubZipFile.Text = "Not Selected";
         }
 
         private void btnSelectSeriesDir_Click(object sender, EventArgs e)
@@ -61,9 +62,19 @@ namespace SeriesManager
         private void btnSelectSubZipFile_Click(object sender, EventArgs e)
         {
             var subPath = @"C:\temp\SM_subs";
+            if (Directory.Exists(subPath))
+            {
+                foreach (var file in Directory.GetFiles(subPath))
+                {
+                    File.Delete(file);
+                }
+            }
+
             var subtitleDir = Directory.CreateDirectory(subPath);
+
+
             _tmpSubDirPath = subtitleDir.FullName;
-            
+
             _zipSubtitlesPath = GetSubtitlesZipFilePath();
 
             this.textSubZipFile.Text = _zipSubtitlesPath;
@@ -86,12 +97,19 @@ namespace SeriesManager
                 if (res == DialogResult.Cancel) { return; }
             }
 
+            if (_episodesInEpisodeSeriesDir.Count == 0)
+            {
+                MessageBox.Show("No videos found in Series Folder!", "No Files!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             ProgressBarSetup(_episodesInEpisodeSeriesDir.Count);
 
             await ManageSeries();
         }
-        
-        
+
+
         private void InitializeSubtitles()
         {
             ZipFile.ExtractToDirectory(_zipSubtitlesPath, _tmpSubDirPath);
@@ -107,18 +125,18 @@ namespace SeriesManager
 
         private async Task ManageSeries()
         {
-            // Extract and "rename" Subs into useable form
-            InitializeSubtitles();
-
             // Extract ep names from given file
             Parser.ExtractEpNamesFromFile(_episodeNameListPath);
-
+            
+            // Extract and "rename" Subs into useable form
+            InitializeSubtitles();
+            
             // Move each ep into its subfolder and rename it by the names extracted from file
             await Parser.MoveEpsIntoSubfolders(_episodesInEpisodeSeriesDir, progressBar);
 
             // Now move subs into the folders as well and rename them correctly
             Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
-            
+
             // Just fancy stuff
             this.lblProgress.Text = "Finished.";
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);

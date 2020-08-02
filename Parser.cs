@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -65,12 +66,11 @@ namespace SeriesManager
                 var targetDir = $"{seriesFolder}\\{name}";
                 if (!Directory.Exists(targetDir))
                 {
-                    // Rename according to _nameList
                     var newName = _nameList.Single(ep => ep.StartsWith($"{name}"));
                     targetDir = $"{seriesFolder}\\{newName}";
 
                     var newPath = $"{subtitlesFolder}\\{newName}{extension}";
-                    File.Move(newPath,$"{targetDir}\\{newName}{extension}");
+                    File.Move(subtitleFile,$"{targetDir}\\{newName}{extension}");
                     continue;
                 }
 
@@ -95,7 +95,7 @@ namespace SeriesManager
 
                 var match = Regex.Match(name, regex.ToString()).Groups;
                 var (seNum, epNum) = PadNamesIfNeeded(match);
-
+                
                 // Get new name for file
                 var newName = _nameList.Count == 0 ? $"S{seNum}E{epNum}" : _nameList.Single(l => l.StartsWith($"S{seNum}E{epNum}")).ToString();
                 var newLocation = $"{subtitleDir}\\{newName}{extension}";
@@ -177,8 +177,10 @@ namespace SeriesManager
                     newName = match;
                 }
 
-                newName = $"{episode}\\{newName}\\{newName}{extension}";
-                result.Add(episode ?? throw new InvalidOperationException("Episode path was null --> GetNewNamesFroEpisodes"), newName);
+                var seriesFolder = Path.GetDirectoryName(episode);
+                newName = $"{seriesFolder}\\{newName}\\{newName}{extension}";
+
+                result.Add(episode, newName);
             }
 
             return result;
