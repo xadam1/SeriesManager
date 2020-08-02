@@ -70,7 +70,7 @@
             this.textSeriesDirPath.ReadOnly = true;
             this.textSeriesDirPath.Size = new System.Drawing.Size(487, 21);
             this.textSeriesDirPath.TabIndex = 24;
-            this.textSeriesDirPath.TextChanged += new System.EventHandler(this.textSeriesDirPath_TextChanged);
+            this.textSeriesDirPath.Click += new System.EventHandler(this.textSeriesDirPath_Click);
             // 
             // lblSeriesFolder
             // 
@@ -89,20 +89,20 @@
             this.textEpNameListFilePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textEpNameListFilePath.Font = new System.Drawing.Font("Montserrat", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textEpNameListFilePath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.textEpNameListFilePath.Location = new System.Drawing.Point(173, 76);
+            this.textEpNameListFilePath.Location = new System.Drawing.Point(173, 118);
             this.textEpNameListFilePath.MaxLength = 50;
             this.textEpNameListFilePath.Name = "textEpNameListFilePath";
             this.textEpNameListFilePath.ReadOnly = true;
             this.textEpNameListFilePath.Size = new System.Drawing.Size(487, 21);
             this.textEpNameListFilePath.TabIndex = 27;
-            this.textEpNameListFilePath.TextChanged += new System.EventHandler(this.textEpNameListFilePath_TextChanged);
+            this.textEpNameListFilePath.Click += new System.EventHandler(this.textEpNameListFilePath_Click);
             // 
             // lblEpNameListFile
             // 
             this.lblEpNameListFile.AutoSize = true;
             this.lblEpNameListFile.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpNameListFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblEpNameListFile.Location = new System.Drawing.Point(12, 78);
+            this.lblEpNameListFile.Location = new System.Drawing.Point(12, 120);
             this.lblEpNameListFile.Name = "lblEpNameListFile";
             this.lblEpNameListFile.Size = new System.Drawing.Size(153, 19);
             this.lblEpNameListFile.TabIndex = 26;
@@ -113,7 +113,7 @@
             this.btnSelectEpNameListFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSelectEpNameListFile.Font = new System.Drawing.Font("Montserrat", 10F);
             this.btnSelectEpNameListFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnSelectEpNameListFile.Location = new System.Drawing.Point(676, 72);
+            this.btnSelectEpNameListFile.Location = new System.Drawing.Point(676, 114);
             this.btnSelectEpNameListFile.Name = "btnSelectEpNameListFile";
             this.btnSelectEpNameListFile.Size = new System.Drawing.Size(80, 25);
             this.btnSelectEpNameListFile.TabIndex = 25;
@@ -126,7 +126,7 @@
             this.btnProcess.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcess.Font = new System.Drawing.Font("Montserrat", 14.25F);
             this.btnProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnProcess.Location = new System.Drawing.Point(333, 333);
+            this.btnProcess.Location = new System.Drawing.Point(343, 288);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(100, 41);
             this.btnProcess.TabIndex = 28;
@@ -136,7 +136,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(150, 493);
+            this.progressBar.Location = new System.Drawing.Point(160, 399);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(487, 23);
             this.progressBar.TabIndex = 29;
@@ -147,7 +147,7 @@
             this.lblEpCounter.AutoSize = true;
             this.lblEpCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblEpCounter.Location = new System.Drawing.Point(12, 233);
+            this.lblEpCounter.Location = new System.Drawing.Point(12, 74);
             this.lblEpCounter.Name = "lblEpCounter";
             this.lblEpCounter.Size = new System.Drawing.Size(145, 19);
             this.lblEpCounter.TabIndex = 30;
@@ -159,7 +159,7 @@
             this.lblProgress.AutoSize = true;
             this.lblProgress.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblProgress.Location = new System.Drawing.Point(343, 455);
+            this.lblProgress.Location = new System.Drawing.Point(353, 361);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(90, 19);
             this.lblProgress.TabIndex = 32;
@@ -171,7 +171,7 @@
             this.checkBoxOpenFolderWhenDone.AutoSize = true;
             this.checkBoxOpenFolderWhenDone.Checked = true;
             this.checkBoxOpenFolderWhenDone.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOpenFolderWhenDone.Location = new System.Drawing.Point(256, 196);
+            this.checkBoxOpenFolderWhenDone.Location = new System.Drawing.Point(256, 226);
             this.checkBoxOpenFolderWhenDone.Name = "checkBoxOpenFolderWhenDone";
             this.checkBoxOpenFolderWhenDone.Size = new System.Drawing.Size(15, 14);
             this.checkBoxOpenFolderWhenDone.TabIndex = 33;
@@ -182,7 +182,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(12, 192);
+            this.label1.Location = new System.Drawing.Point(12, 222);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(227, 19);
             this.label1.TabIndex = 34;
@@ -194,20 +194,20 @@
             this.textSubZipFile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textSubZipFile.Font = new System.Drawing.Font("Montserrat", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textSubZipFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.textSubZipFile.Location = new System.Drawing.Point(173, 117);
+            this.textSubZipFile.Location = new System.Drawing.Point(173, 165);
             this.textSubZipFile.MaxLength = 50;
             this.textSubZipFile.Name = "textSubZipFile";
             this.textSubZipFile.ReadOnly = true;
             this.textSubZipFile.Size = new System.Drawing.Size(487, 21);
             this.textSubZipFile.TabIndex = 37;
-            this.textSubZipFile.TextChanged += new System.EventHandler(this.textSubZipFile_TextChanged);
+            this.textSubZipFile.Click += new System.EventHandler(this.textSubZipFile_Click);
             // 
             // lblSubZipFile
             // 
             this.lblSubZipFile.AutoSize = true;
             this.lblSubZipFile.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubZipFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblSubZipFile.Location = new System.Drawing.Point(12, 119);
+            this.lblSubZipFile.Location = new System.Drawing.Point(12, 167);
             this.lblSubZipFile.Name = "lblSubZipFile";
             this.lblSubZipFile.Size = new System.Drawing.Size(142, 19);
             this.lblSubZipFile.TabIndex = 36;
@@ -218,7 +218,7 @@
             this.btnSelectSubZipFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSelectSubZipFile.Font = new System.Drawing.Font("Montserrat", 10F);
             this.btnSelectSubZipFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnSelectSubZipFile.Location = new System.Drawing.Point(676, 113);
+            this.btnSelectSubZipFile.Location = new System.Drawing.Point(676, 161);
             this.btnSelectSubZipFile.Name = "btnSelectSubZipFile";
             this.btnSelectSubZipFile.Size = new System.Drawing.Size(80, 25);
             this.btnSelectSubZipFile.TabIndex = 35;
@@ -231,7 +231,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(784, 463);
             this.Controls.Add(this.textSubZipFile);
             this.Controls.Add(this.lblSubZipFile);
             this.Controls.Add(this.btnSelectSubZipFile);

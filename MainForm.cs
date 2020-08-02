@@ -273,17 +273,18 @@ namespace SeriesManager
         }
 
 
-        private void textSeriesDirPath_TextChanged(object sender, EventArgs e)
+
+        private void textSeriesDirPath_Click(object sender, EventArgs e)
         {
             btnSelectSeriesDir_Click(sender, e);
         }
 
-        private void textEpNameListFilePath_TextChanged(object sender, EventArgs e)
+        private void textEpNameListFilePath_Click(object sender, EventArgs e)
         {
             btnSelectEpNameListFile_Click(sender, e);
         }
 
-        private void textSubZipFile_TextChanged(object sender, EventArgs e)
+        private void textSubZipFile_Click(object sender, EventArgs e)
         {
             btnSelectSubZipFile_Click(sender, e);
         }
