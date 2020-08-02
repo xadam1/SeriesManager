@@ -180,7 +180,7 @@
             this.checkBoxOpenFolderWhenDone.AutoSize = true;
             this.checkBoxOpenFolderWhenDone.Checked = true;
             this.checkBoxOpenFolderWhenDone.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOpenFolderWhenDone.Location = new System.Drawing.Point(256, 182);
+            this.checkBoxOpenFolderWhenDone.Location = new System.Drawing.Point(256, 196);
             this.checkBoxOpenFolderWhenDone.Name = "checkBoxOpenFolderWhenDone";
             this.checkBoxOpenFolderWhenDone.Size = new System.Drawing.Size(15, 14);
             this.checkBoxOpenFolderWhenDone.TabIndex = 33;
@@ -191,7 +191,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.label1.Location = new System.Drawing.Point(12, 178);
+            this.label1.Location = new System.Drawing.Point(12, 192);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(227, 19);
             this.label1.TabIndex = 34;

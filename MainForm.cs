@@ -16,8 +16,10 @@ namespace SeriesManager
     {
         private string _seriesDirectoryPath;
         private string _episodeNameListPath;
+        private string _tmpSubDirPath;
 
-        
+
+
         private List<string> _filesInDir = new List<string>();
         private List<string> _episodeNamesFromFile = new List<string>();
 
@@ -56,12 +58,38 @@ namespace SeriesManager
             _episodeNameListPath = filePath;
 
 
+
+
             // EPISODE FORMAT: "S02E01-The_North_Remembers"
             _episodeNamesFromFile = Parser.ExtractEpNamesFromFile(_episodeNameListPath);
 
             this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {_episodeNamesFromFile.Count}";
             this.lblEpNamesCounter.Visible = true;
         }
+
+        private void btnSelectSubZipFile_Click(object sender, EventArgs e)
+        {
+            var subPath = @"C:\temp\SM_subs";
+            var subtitleDir = Directory.CreateDirectory(subPath);
+            _tmpSubDirPath = subtitleDir.FullName;
+
+            var zipFile = GetSubtitlesZipFilePath();
+
+            ZipFile.ExtractToDirectory(zipFile, subPath);
+            var subFiles = Directory.GetFiles(subPath).ToList();
+
+            if (!Parser.RenameSubtitleFiles(subtitleDir.FullName))
+            {
+                MessageBox.Show("Unable to find series and episode description in subtitle files.\n",
+                    "Subtitles Did NOT Match", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DeleteSubsDir(_tmpSubDirPath);
+                return;
+            }
+
+
+
+        }
+
 
         private async void btnProcess_Click(object sender, EventArgs e)
         {
@@ -88,22 +116,10 @@ namespace SeriesManager
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             OpenFolderAfterFinishing();
+
+            DeleteSubsDir(_tmpSubDirPath);
         }
 
-        private void btnSelectSubZipFile_Click(object sender, EventArgs e)
-        {
-            var subPath = @"C:\temp\SM_subs";
-            var subtitleDir = Directory.CreateDirectory(subPath);
-
-            var zipFile = GetSubtitlesZipFilePath();
-
-            ZipFile.ExtractToDirectory(zipFile, subPath);
-            var subFiles = Directory.GetFiles(subPath).ToList();
-
-            Parser.RenameSubtitleFiles(subtitleDir.FullName);
-
-            DeleteSubsDir(subtitleDir.FullName);
-        }
 
 
         private string GetSeriesDirectoryPath()
