@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnSelectSeriesDir = new System.Windows.Forms.Button();
             this.textSeriesDirPath = new System.Windows.Forms.TextBox();
             this.lblSeriesFolder = new System.Windows.Forms.Label();
@@ -247,6 +248,7 @@
             this.Controls.Add(this.textSeriesDirPath);
             this.Controls.Add(this.lblSeriesFolder);
             this.Controls.Add(this.btnSelectSeriesDir);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
