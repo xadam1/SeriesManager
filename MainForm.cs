@@ -86,6 +86,8 @@ namespace SeriesManager
 
             this.lblProgress.Text = "Finished.";
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            OpenFolderAfterFinishing();
         }
 
 
@@ -141,6 +143,13 @@ namespace SeriesManager
             this.progressBar.Value = 1;
             // Set the Step property to a value of 1 to represent each file being copied.
             this.progressBar.Step = 1;
+        }
+
+        private void OpenFolderAfterFinishing()
+        {
+            if (!this.checkBoxOpenFolderWhenDone.Checked) { return; }
+
+            System.Diagnostics.Process.Start("explorer.exe", $"{_seriesDirectoryPath}");
         }
     }
 }

@@ -39,6 +39,8 @@
             this.lblEpCounter = new System.Windows.Forms.Label();
             this.lblEpNamesCounter = new System.Windows.Forms.Label();
             this.lblProgress = new System.Windows.Forms.Label();
+            this.checkBoxOpenFolderWhenDone = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSelectSeriesDir
@@ -118,7 +120,7 @@
             this.btnProcess.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcess.Font = new System.Drawing.Font("Montserrat", 14.25F);
             this.btnProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.btnProcess.Location = new System.Drawing.Point(353, 120);
+            this.btnProcess.Location = new System.Drawing.Point(333, 316);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(100, 41);
             this.btnProcess.TabIndex = 28;
@@ -128,7 +130,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(173, 358);
+            this.progressBar.Location = new System.Drawing.Point(150, 493);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(487, 23);
             this.progressBar.TabIndex = 29;
@@ -139,7 +141,7 @@
             this.lblEpCounter.AutoSize = true;
             this.lblEpCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblEpCounter.Location = new System.Drawing.Point(12, 210);
+            this.lblEpCounter.Location = new System.Drawing.Point(12, 221);
             this.lblEpCounter.Name = "lblEpCounter";
             this.lblEpCounter.Size = new System.Drawing.Size(145, 19);
             this.lblEpCounter.TabIndex = 30;
@@ -151,7 +153,7 @@
             this.lblEpNamesCounter.AutoSize = true;
             this.lblEpNamesCounter.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEpNamesCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblEpNamesCounter.Location = new System.Drawing.Point(12, 254);
+            this.lblEpNamesCounter.Location = new System.Drawing.Point(12, 264);
             this.lblEpNamesCounter.Name = "lblEpNamesCounter";
             this.lblEpNamesCounter.Size = new System.Drawing.Size(225, 19);
             this.lblEpNamesCounter.TabIndex = 31;
@@ -163,12 +165,34 @@
             this.lblProgress.AutoSize = true;
             this.lblProgress.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
-            this.lblProgress.Location = new System.Drawing.Point(366, 324);
+            this.lblProgress.Location = new System.Drawing.Point(343, 455);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(90, 19);
             this.lblProgress.TabIndex = 32;
             this.lblProgress.Text = "Progress...";
             this.lblProgress.Visible = false;
+            // 
+            // checkBoxOpenFolderWhenDone
+            // 
+            this.checkBoxOpenFolderWhenDone.AutoSize = true;
+            this.checkBoxOpenFolderWhenDone.Checked = true;
+            this.checkBoxOpenFolderWhenDone.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOpenFolderWhenDone.Location = new System.Drawing.Point(256, 146);
+            this.checkBoxOpenFolderWhenDone.Name = "checkBoxOpenFolderWhenDone";
+            this.checkBoxOpenFolderWhenDone.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxOpenFolderWhenDone.TabIndex = 33;
+            this.checkBoxOpenFolderWhenDone.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
+            this.label1.Location = new System.Drawing.Point(12, 142);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(227, 19);
+            this.label1.TabIndex = 34;
+            this.label1.Text = "Open Folder After Finishing";
             // 
             // MainForm
             // 
@@ -176,6 +200,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.checkBoxOpenFolderWhenDone);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.lblEpNamesCounter);
             this.Controls.Add(this.lblEpCounter);
@@ -207,6 +233,8 @@
         private System.Windows.Forms.Label lblEpCounter;
         private System.Windows.Forms.Label lblEpNamesCounter;
         private System.Windows.Forms.Label lblProgress;
+        private System.Windows.Forms.CheckBox checkBoxOpenFolderWhenDone;
+        private System.Windows.Forms.Label label1;
     }
 }
 
