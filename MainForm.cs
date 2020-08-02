@@ -17,6 +17,8 @@ namespace SeriesManager
     {
         private string _seriesDirectoryPath;
         private string _episodeNameListPath;
+        private string _zipSubtitlesPath;
+
         private string _tmpSubDirPath;
 
         private List<string> _episodesInEpisodeSeriesDir = new List<string>();
@@ -61,21 +63,11 @@ namespace SeriesManager
             var subPath = @"C:\temp\SM_subs";
             var subtitleDir = Directory.CreateDirectory(subPath);
             _tmpSubDirPath = subtitleDir.FullName;
+            
+            _zipSubtitlesPath = GetSubtitlesZipFilePath();
 
-            var zipFile = GetSubtitlesZipFilePath();
-
-            ZipFile.ExtractToDirectory(zipFile, subPath);
-            var subFiles = Directory.GetFiles(subPath).ToList();
-
-            if (!Parser.RenameSubtitleFiles(subtitleDir.FullName))
-            {
-                MessageBox.Show("Unable to find series and episode description in subtitle files.\n",
-                    "Subtitles Did NOT Match", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DeleteSubsDir(_tmpSubDirPath);
-                return;
-            }
+            this.textSubZipFile.Text = _zipSubtitlesPath;
         }
-
 
         private async void btnProcess_Click(object sender, EventArgs e)
         {
@@ -96,17 +88,46 @@ namespace SeriesManager
 
             ProgressBarSetup(_episodesInEpisodeSeriesDir.Count);
 
+            await ManageSeries();
+        }
+        
+        
+        private void InitializeSubtitles()
+        {
+            ZipFile.ExtractToDirectory(_zipSubtitlesPath, _tmpSubDirPath);
+            var subFiles = Directory.GetFiles(_tmpSubDirPath).ToList();
+
+            if (!Parser.RenameSubtitleFiles(_tmpSubDirPath))
+            {
+                MessageBox.Show("Unable to find series and episode description in subtitle files.\n",
+                    "Subtitles Did NOT Match", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DeleteSubsDir(_tmpSubDirPath);
+            }
+        }
+
+        private async Task ManageSeries()
+        {
+            // Extract and "rename" Subs into useable form
+            InitializeSubtitles();
+
+            // Extract ep names from given file
+            Parser.ExtractEpNamesFromFile(_episodeNameListPath);
+
+            // Move each ep into its subfolder and rename it by the names extracted from file
             await Parser.RenameAndMoveEpisodes(_episodesInEpisodeSeriesDir, progressBar);
 
+            // Now move subs into the folders as well and rename them correctly
             Parser.MoveSubsIntoEpFolder(_seriesDirectoryPath, _tmpSubDirPath);
-
+            
+            // Just fancy stuff
             this.lblProgress.Text = "Finished.";
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            // If checked open the final result folder
             OpenFolderAfterFinishing();
+            // Clean-Up
             DeleteSubsDir(_tmpSubDirPath);
         }
-
 
 
         private string GetSeriesDirectoryPath()
@@ -167,6 +188,7 @@ namespace SeriesManager
 
             return zipFile;
         }
+
 
         private void ProgressBarSetup(int numberOfFiles)
         {

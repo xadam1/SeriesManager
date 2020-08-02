@@ -12,12 +12,7 @@ namespace SeriesManager
     {
         private static List<string> _namelist = new List<string>();
 
-
-        /// <summary>
-        /// Loads episode names from given file.
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns>List of episode names in correct format</returns>
+        
         public static List<string> ExtractEpNamesFromFile(string filePath)
         {
             List<string> episodes = new List<string>();
@@ -42,17 +37,10 @@ namespace SeriesManager
             return episodes;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="episodes"></param>
-        /// <param name="epNames"></param>
-        /// <param name="progressBar"></param>
-        /// <returns></returns>
-        public static async Task<bool> RenameAndMoveEpisodes(List<string> episodes, ProgressBar progressBar)
+        public static async Task RenameAndMoveEpisodes(List<string> episodes, ProgressBar progressBar)
         {
             var newNames = GetNewNamesForEpisodes(episodes, _namelist);
-            if (newNames is null) { return false; }
+            if (newNames is null) { return; }
 
             foreach (var episode in newNames)
             {
@@ -61,20 +49,19 @@ namespace SeriesManager
 
                 progressBar.PerformStep();
             }
-
-            return true;
         }
 
-        public static void MoveSubsIntoEpFolder(string seriesFolder,string subtitlesFolder)
+        public static void MoveSubsIntoEpFolder(string seriesFolder, string subtitlesFolder)
         {
             var subtitles = Directory.GetFiles(subtitlesFolder).ToList();
 
             foreach (var subtitleFile in subtitles)
             {
-                FileInfo sbFile = new FileInfo(subtitleFile);
+                var name = Path.GetFileNameWithoutExtension(subtitleFile);
+                var extension = Path.GetExtension(subtitleFile);
 
-                var targetDir = $"{seriesFolder}\\{sbFile.Name}";
-                File.Move(sbFile.FullName,$"{targetDir}\\{sbFile.Name}{sbFile.Extension}");
+                var targetDir = $"{seriesFolder}\\{name}";
+                File.Move(subtitleFile, $"{targetDir}\\{name}{extension}");
             }
         }
 
@@ -100,7 +87,7 @@ namespace SeriesManager
                 // Get new name for file
                 var newName = _namelist.Count == 0 ? $"S{seNum}E{epNum}" : _namelist.Single(name => name.StartsWith($"S{seNum}E{epNum}")).ToString();
                 var newLocation = $"{subtitleDir}\\{newName}{extension}";
-                File.Move(subtitle.FullName,newLocation);
+                File.Move(subtitle.FullName, newLocation);
             }
             return true;
         }
