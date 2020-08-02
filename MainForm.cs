@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace SeriesManager
 {
@@ -16,8 +17,7 @@ namespace SeriesManager
         private string _seriesDirectoryPath;
         private string _episodeNameListPath;
 
-        private Parser _parser = new Parser();
-
+        
         private List<string> _filesInDir = new List<string>();
         private List<string> _episodeNamesFromFile = new List<string>();
 
@@ -57,7 +57,7 @@ namespace SeriesManager
 
 
             // EPISODE FORMAT: "S02E01-The_North_Remembers"
-            _episodeNamesFromFile = _parser.ExtractEpNamesFromFile(_episodeNameListPath);
+            _episodeNamesFromFile = Parser.ExtractEpNamesFromFile(_episodeNameListPath);
 
             this.lblEpNamesCounter.Text = $"Names of Episodes Found:  {_episodeNamesFromFile.Count}";
             this.lblEpNamesCounter.Visible = true;
@@ -82,12 +82,27 @@ namespace SeriesManager
 
             ProgressBarSetup(_filesInDir.Count);
 
-            await _parser.RenameAndMoveEpisodes(_filesInDir, _episodeNamesFromFile, progressBar);
+            await Parser.RenameAndMoveEpisodes(_filesInDir, _episodeNamesFromFile, progressBar);
 
             this.lblProgress.Text = "Finished.";
             MessageBox.Show("Everything DONE!", "Series Sorted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             OpenFolderAfterFinishing();
+        }
+
+        private void btnSelectSubZipFile_Click(object sender, EventArgs e)
+        {
+            var subPath = @"C:\temp\SM_subs";
+            var subtitleDir = Directory.CreateDirectory(subPath);
+
+            var zipFile = GetSubtitlesZipFilePath();
+
+            ZipFile.ExtractToDirectory(zipFile, subPath);
+            var subFiles = Directory.GetFiles(subPath).ToList();
+
+            Parser.RenameSubtitleFiles(subtitleDir.FullName);
+
+            DeleteSubsDir(subtitleDir.FullName);
         }
 
 
@@ -129,6 +144,27 @@ namespace SeriesManager
             return filePath;
         }
 
+        private string GetSubtitlesZipFilePath()
+        {
+            var zipFile = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "rar files (*.rar)|*.rar|zip files (*.zip)|*.zip|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    zipFile = openFileDialog.FileName;
+                    Console.WriteLine($"SubsZipFile: {zipFile}");
+                }
+            }
+
+            return zipFile;
+        }
+
         private void ProgressBarSetup(int numberOfFiles)
         {
             this.lblProgress.Visible = true;
@@ -150,6 +186,16 @@ namespace SeriesManager
             if (!this.checkBoxOpenFolderWhenDone.Checked) { return; }
 
             System.Diagnostics.Process.Start("explorer.exe", $"{_seriesDirectoryPath}");
+        }
+
+        private void DeleteSubsDir(string subsDirPath)
+        {
+            var files = Directory.GetFiles(subsDirPath);
+            foreach (var file in files)
+            {
+                File.Delete(file);
+            }
+            Directory.Delete(subsDirPath);
         }
     }
 }
