@@ -210,7 +210,7 @@ namespace SeriesManager
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "rar files (*.rar)|*.rar|zip files (*.zip)|*.zip|All files (*.*)|*.*";
+                openFileDialog.Filter = "All files (*.*)|*.*|zip files (*.zip)|*.zip";
                 openFileDialog.FilterIndex = 2;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)

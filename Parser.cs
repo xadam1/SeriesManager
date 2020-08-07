@@ -30,7 +30,7 @@ namespace SeriesManager
                 var epLabel = Regex.Replace(episode[0].Trim(), @"\s+", "");
                 var epName = Regex.Replace(episode[1].Trim(), @"\s", "_");
 
-                var epFullName = $"{epLabel}-{epName}";
+                var epFullName = $"{epLabel}_{epName}";
                 episodes.Add(epFullName);
             }
 
@@ -163,7 +163,7 @@ namespace SeriesManager
                 var lbl = $"S{seNum}E{epNum}";
 
 
-                var regex = new Regex($"{lbl}-");
+                var regex = new Regex($"{lbl}_");
                 var match = epNames.SingleOrDefault(l => regex.IsMatch(l));
                 string newName = lbl;
                 if (match is null)
