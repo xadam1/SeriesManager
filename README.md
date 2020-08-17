@@ -24,10 +24,10 @@ Episode name list can be easily obtained from google, simply by googling name of
 
 
 #### Subtitles
-You can download subtitles from pretty much anywhere. Just check, that they are matching your videos. **Names of the files of subs don't really matter. _App searches for multiple REGEXes matching the names (such as 3x01, Season 2 Episode 3, S2E3, etc..)_**
+You can download subtitles from pretty much anywhere. **Names of the files of subs don't really matter. _App searches for multiple REGEXes matching the names (such as 3x01, Season 2 Episode 3, S2E3, etc..)_**
 | | |
 |-|-|
-| My subtitle .zip file  |  <img src="https://github.com/xadam1/SeriesManager/blob/master/resources/subs.png"> |
+| This is example I used as the subtitle _.zip file_. Just check, that they are matching your videos. |  <img src="https://github.com/xadam1/SeriesManager/blob/master/resources/subs.png"> |
 
 #### DONE
 | | |
