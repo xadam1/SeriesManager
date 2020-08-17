@@ -9,15 +9,15 @@ I thought, that it's cool, but quite boring to do, if you want to manage series 
 
 ### How does it work
 App itself is very simple and looks like this
-<img src="https://github.com/xadam1/SeriesManager/blob/master/resources/main.png" width=300 height=300>
+
+<img src="https://github.com/xadam1/SeriesManager/blob/master/resources/main.png" width=500 height=500>
 
 As you can see, you can select **Series folder** (where the movies are located), **Episode Name List** and **Subtitles** _(.zip)_.
 _If you wish to just "manage" the series, without subtitles or additional episode names, you can ommit Episode Name List and Subtitles_.
 
 ###### Episode Name List
 Episode name list can be easily obtained from google, simply by googling name of the series and season.
----------------------
-<img src="https://github.com/xadam1/SeriesManager/blob/master/resources/google_ep.png" width=300 height=300> | <img src="https://github.com/xadam1/SeriesManager/blob/master/resources/file_ep.png" width=300 height=300>
----------------------
 
-
+| Google output            |  File created |
+:-------------------------:|:-------------------------:
+<img src="https://github.com/xadam1/SeriesManager/blob/master/resources/google_ep.png">  |  <img src="https://github.com/xadam1/SeriesManager/blob/master/resources/file_ep.png">
